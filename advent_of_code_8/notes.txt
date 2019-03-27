@@ -1,0 +1,28 @@
+﻿I need to subtract the parts of the license file that isn't meta data.
+Or
+I need to subtract the metadata in the license file and add to a variable.
+To calculate the sum of the metadata entries.
+
+
+
+Maybe I can have two lists of all the numbers.
+I can count childs, and metadata.
+I add children to a list of childrens and metadata count to a count of metadata.
+If child is > 0 I add the read the next two numbers as a header.
+For every first number in the header, I add it to the childList.
+For every second number in the header, I add to a counter of metadataList.
+
+I need to remove the number from the list as soon as it is used.
+And I need to be able to handle the different list and their functions without regard of the other.
+
+So, a list with each number and a int with the sum of MetaData.
+
+
+
+
+
+
+
+	
+	
+ 

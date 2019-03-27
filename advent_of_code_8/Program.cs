@@ -6,7 +6,7 @@ namespace advent_of_code_8
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var inputText = @"../../../input.txt";
         }
     }
 }
