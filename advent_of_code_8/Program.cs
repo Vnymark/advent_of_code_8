@@ -10,8 +10,8 @@ namespace advent_of_code_8
         public static List<Node> NodeList;
         static void Main(string[] args)
         {
-            //var inputPath = @"../../../input.txt";
-            var inputPath = @"../../../test.txt";
+            var inputPath = @"../../../input.txt";
+            //var inputPath = @"../../../test.txt";
             string inputText = File.ReadAllText(inputPath);
             List<int> NumberList = inputText.Split(' ').Select(x => int.Parse(x)).ToList();
 
@@ -24,6 +24,9 @@ namespace advent_of_code_8
             int rootLevelCount = 0;
             ParseHeader();
 
+            //Run through License File
+            //If a child exist, add that child.
+            //Else, add the metadata.
             while (NumberList.Count > 0)
             {
                 int childCount = ChildList.Last();
@@ -40,22 +43,31 @@ namespace advent_of_code_8
                 }
             }
 
+            //Part 2
+            //Reverse NodeList to calculate children before their parent.
+            List<Node> ReversedNodeList = Program.NodeList;
+            ReversedNodeList.Reverse();
+            foreach (Node n in Program.NodeList)
+            {
+                n.CalculateChildSum();
+            }
+
+            //Parsing the header and adding the newly parsed Node as a child to the correct Node parent.
             void ParseHeader() {
                 node = new Node();
                 int i = 0;
                 while (i < 2)
                 {
-                    int n = NumberList.First();
                     if (i == 0)
                     {
-                        node.NumberOfChildren = n;
-                        ChildList.Add(n);
+                        node.NumberOfChildren = NumberList.First();
+                        ChildList.Add(NumberList.First());
                         NumberList.RemoveAt(0);
                     }
                     else
                     {
-                        node.NumberOfMetadata = n;
-                        MetaDataList.Add(n);
+                        node.NumberOfMetadata = NumberList.First();
+                        MetaDataList.Add(NumberList.First());
                         NumberList.RemoveAt(0);
                     }
                     i++;
@@ -66,6 +78,8 @@ namespace advent_of_code_8
                 rootLevelCount++;
             }
 
+            //Add MetaData, both to metaDataSum for part1.
+            //But also adding the metaData to Nodes for part 2.
             void AddMetaData()
             {
                 rootLevelCount--;
@@ -74,14 +88,15 @@ namespace advent_of_code_8
                 while (metaDataCount > 0)
                 {
                     currentNode.MetaData.Add(NumberList.First());
+                    currentNode.MetaDataSum += NumberList.First();
                     metaDataSum += NumberList.First();
                     NumberList.RemoveAt(0);
                     metaDataCount--;
                 }
                 MetaDataList.RemoveAt(MetaDataList.Count - 1);
-                
             }
 
+            //Get the current Node (used while adding MetaData).
             Node GetCurrentNode()
             {
                 Node currentNode = NodeList.FindLast(x => x.RootLevel == (rootLevelCount));
@@ -91,7 +106,10 @@ namespace advent_of_code_8
                 }
                 return currentNode;
             }
-            Console.WriteLine(metaDataSum);
+
+            //Print the result
+            Console.WriteLine("The sum of the MetaData: {0}", metaDataSum);
+            Console.WriteLine("The value of the root Node, based on its childrens value: {0}", ReversedNodeList.ElementAt(ReversedNodeList.Count-1).ChildSum);
             Console.ReadKey();
         }
     }

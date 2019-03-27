@@ -11,7 +11,10 @@ namespace advent_of_code_8
         public List<Node> Children { get; set; }
         public List<int> MetaData { get; set; }
         public int RootLevel { get; set; }
+        public int MetaDataSum { get; set; }
+        public int ChildSum { get; set; }
 
+        //Takes the current Node and adds to the last added Node, that has a rootlevel of one higher(lower in number).
         public void AddChild()
         {
             if (this.RootLevel > 0)
@@ -28,10 +31,34 @@ namespace advent_of_code_8
                 }
             }
         }
-
-        public void CalculateSum()
+        
+        //If Node has children, check if the index of those children(starting at 1), matches any of the metadata numbers.
+        //If the matching children have children of their own, add their ChildSum.
+        //Else, use their MetaDataSum.
+        public void CalculateChildSum()
         {
-
+            if (this.Children != null)
+            {
+                foreach (int m in this.MetaData)
+                {
+                    int i = 1;
+                    foreach (Node c in this.Children)
+                    {
+                        if (m == i)
+                        {
+                            if (c.Children == null)
+                            {
+                                this.ChildSum += c.MetaDataSum;
+                            }
+                            else
+                            {
+                                this.ChildSum += c.ChildSum;
+                            }
+                        }
+                        i++;
+                    }
+                }
+            }
         }
     }
 }
