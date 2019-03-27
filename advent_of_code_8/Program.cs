@@ -9,8 +9,8 @@ namespace advent_of_code_8
     {
         static void Main(string[] args)
         {
-            //var inputPath = @"../../../input.txt";
-            var inputPath = @"../../../test.txt";
+            var inputPath = @"../../../input.txt";
+            //var inputPath = @"../../../test.txt";
             string inputText = File.ReadAllText(inputPath);
             List<int> NumberList = inputText.Split(' ').Select(x => int.Parse(x)).ToList();
 
@@ -22,14 +22,17 @@ namespace advent_of_code_8
 
             while (NumberList.Count > 0)
             {
-                if (ChildList.Last() != 0)
+                int childCount = ChildList.Last();
+                ChildList.RemoveAt((ChildList.Count() - 1));
+                if (childCount != 0)
                 {
+                    childCount = childCount - 1;
+                    ChildList.Add(childCount);
                     ParseHeader();
                 }
                 else
                 {
                     AddMetaData();
-                    ChildList.RemoveAt((ChildList.Count()-1));
                 }
             }
 
@@ -52,24 +55,18 @@ namespace advent_of_code_8
                 }
             }
 
-
             void AddMetaData()
             {
                 MetaDataCount = MetaDataList.Last();
                 while (MetaDataCount > 0)
                 {
                     metaDataSum += NumberList.First();
-                    Console.WriteLine(NumberList.First());
                     NumberList.RemoveAt(0);
                     MetaDataCount--;
                 }
                 MetaDataList.RemoveAt(MetaDataList.Count - 1);
             }
-
-            
-
             Console.ReadKey();
-
         }
     }
 }
