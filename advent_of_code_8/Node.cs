@@ -8,23 +8,30 @@ namespace advent_of_code_8
     {
         public int NumberOfChildren { get; set; }
         public int NumberOfMetadata { get; set; }
-        public Node Parent { get; set; }
+        public List<Node> Children { get; set; }
         public List<int> MetaData { get; set; }
         public int RootLevel { get; set; }
 
-        public void AddParent()
+        public void AddChild()
         {
             if (this.RootLevel > 0)
             {
-                //List<Node> Children = new List<Node>();
+                
                 Node parentNode = Program.NodeList.FindLast(x => x.RootLevel == (this.RootLevel - 1));
                 if (parentNode != null)
                 {
-                    this.Parent = parentNode;
+                    if(parentNode.Children == null)
+                    {
+                        parentNode.Children = new List<Node>();
+                    }
+                    parentNode.Children.Add(this); 
                 }
-                //Children.Add(this);
-                //parentNode.Parent = Children;
             }
+        }
+
+        public void CalculateSum()
+        {
+
         }
     }
 }

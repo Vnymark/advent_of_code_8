@@ -30,6 +30,11 @@ Then when AddMetaData() adds metaData, I could add that data to a list for MetaD
 When metadata has been added correctly, that node is saved, in the Children at the index of NodeCounter.
 Then NodeCounter is subtracted by one.
 
+nCalculateNodeSum() {
+	foreach (int m in this.MetaData) {
+		this.MetaDataSum += m;
+	}
+}
 
 
 

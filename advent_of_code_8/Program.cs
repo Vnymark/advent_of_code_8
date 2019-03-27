@@ -36,7 +36,6 @@ namespace advent_of_code_8
                 }
                 else
                 {
-                    
                     AddMetaData();
                 }
             }
@@ -62,7 +61,7 @@ namespace advent_of_code_8
                     i++;
                 }
                 node.RootLevel = rootLevelCount;
-                node.AddParent();
+                node.AddChild();
                 NodeList.Add(node);
                 rootLevelCount++;
             }
@@ -73,7 +72,6 @@ namespace advent_of_code_8
                 metaDataCount = MetaDataList.Last();
                 while (metaDataCount > 0)
                 {
-                    Console.WriteLine(NumberList.First());
                     metaDataSum += NumberList.First();
                     NumberList.RemoveAt(0);
                     metaDataCount--;
@@ -81,6 +79,7 @@ namespace advent_of_code_8
                 MetaDataList.RemoveAt(MetaDataList.Count - 1);
                 
             }
+            Console.WriteLine(metaDataSum);
             Console.ReadKey();
         }
     }
