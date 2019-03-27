@@ -69,15 +69,27 @@ namespace advent_of_code_8
             void AddMetaData()
             {
                 rootLevelCount--;
+                Node currentNode = GetCurrentNode();
                 metaDataCount = MetaDataList.Last();
                 while (metaDataCount > 0)
                 {
+                    currentNode.MetaData.Add(NumberList.First());
                     metaDataSum += NumberList.First();
                     NumberList.RemoveAt(0);
                     metaDataCount--;
                 }
                 MetaDataList.RemoveAt(MetaDataList.Count - 1);
                 
+            }
+
+            Node GetCurrentNode()
+            {
+                Node currentNode = NodeList.FindLast(x => x.RootLevel == (rootLevelCount));
+                if (currentNode.MetaData == null)
+                {
+                    currentNode.MetaData = new List<int>();
+                }
+                return currentNode;
             }
             Console.WriteLine(metaDataSum);
             Console.ReadKey();
