@@ -7,17 +7,21 @@ namespace advent_of_code_8
 {
     class Program
     {
+        public static List<Node> NodeList;
         static void Main(string[] args)
         {
-            var inputPath = @"../../../input.txt";
-            //var inputPath = @"../../../test.txt";
+            //var inputPath = @"../../../input.txt";
+            var inputPath = @"../../../test.txt";
             string inputText = File.ReadAllText(inputPath);
             List<int> NumberList = inputText.Split(' ').Select(x => int.Parse(x)).ToList();
 
             List<int> ChildList = new List<int>();
             List<int> MetaDataList = new List<int>();
+            NodeList = new List<Node>();
+            Node node = new Node();
             int metaDataSum = 0;
-            int MetaDataCount = 0;
+            int metaDataCount = 0;
+            int rootLevelCount = 0;
             ParseHeader();
 
             while (NumberList.Count > 0)
@@ -32,39 +36,50 @@ namespace advent_of_code_8
                 }
                 else
                 {
+                    
                     AddMetaData();
                 }
             }
 
             void ParseHeader() {
+                node = new Node();
                 int i = 0;
                 while (i < 2)
                 {
                     int n = NumberList.First();
                     if (i == 0)
                     {
+                        node.NumberOfChildren = n;
                         ChildList.Add(n);
                         NumberList.RemoveAt(0);
                     }
                     else
                     {
+                        node.NumberOfMetadata = n;
                         MetaDataList.Add(n);
                         NumberList.RemoveAt(0);
                     }
                     i++;
                 }
+                node.RootLevel = rootLevelCount;
+                node.AddParent();
+                NodeList.Add(node);
+                rootLevelCount++;
             }
 
             void AddMetaData()
             {
-                MetaDataCount = MetaDataList.Last();
-                while (MetaDataCount > 0)
+                rootLevelCount--;
+                metaDataCount = MetaDataList.Last();
+                while (metaDataCount > 0)
                 {
+                    Console.WriteLine(NumberList.First());
                     metaDataSum += NumberList.First();
                     NumberList.RemoveAt(0);
-                    MetaDataCount--;
+                    metaDataCount--;
                 }
                 MetaDataList.RemoveAt(MetaDataList.Count - 1);
+                
             }
             Console.ReadKey();
         }

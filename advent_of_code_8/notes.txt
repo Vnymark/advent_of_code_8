@@ -18,6 +18,19 @@ And I need to be able to handle the different list and their functions without r
 So, a list with each number and a int with the sum of MetaData.
 
 
+Part 2:
+
+If I can use my existing functions to add Node objects.
+Node:
+Int NumberOfChildren, Int NumberOfMetaData, Node Parent, List<Int> Metadata.
+
+I might be able to add a counter to ParseHeader() to count( int NodeCounter) each time it parses a new header.
+When it parses a new Header, it creates a new Node and adds the Header-data to the Node.
+Then when AddMetaData() adds metaData, I could add that data to a list for MetaData.
+When metadata has been added correctly, that node is saved, in the Children at the index of NodeCounter.
+Then NodeCounter is subtracted by one.
+
+
 
 
 
